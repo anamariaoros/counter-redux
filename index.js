@@ -47,6 +47,15 @@ function createStore( reducer, initialState ) {
 
 const store = createStore( counterReducer, 0 );
 
+let next = store.dispatch;
+store.dispatch = function dispatchAndLog(action) {
+  console.log('dispatching', action)
+  let result = next(action)
+  console.log('next state', store.getState())
+  return result
+  console.log( "end dispatch and log")
+}
+
 store.dispatch( increment );
 console.log( store.getState( ) );
 store.dispatch( increment );
